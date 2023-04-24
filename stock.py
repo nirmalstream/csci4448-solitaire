@@ -1,6 +1,6 @@
 class Stock:
-    def __init__(self):
-        self.cards = []
+    def __init__(self, cards):
+        self.cards = cards
 
     def turn(self):
         # get first card from stock
@@ -11,5 +11,8 @@ class Stock:
 
         return card
     
+    def get_card(self):
+        # remove first card from stock
+        return self.cards.pop(0)    
     
 

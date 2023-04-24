@@ -1,15 +1,28 @@
-import card.py
-import numpy as np
+import card
+import random
 
 class simpleCardFactory:
-    def __init__(self):
-
     def create(self, suite, val):
         if suite == "hearts":
-            return hearts(val = val)
+            return card.hearts(val)
         elif suite == "clubs":
-            return clubs(val = val)
+            return card.clubs(val)
         elif suite == "diamonds":
-            return diamonds(val = val)
+            return card.diamonds(val)
         elif suite == "spades":
-            return spades(val = val)
+            return card.spades(val)
+        else:
+            return "error"
+        
+    def createDeck(self):
+        deck = []
+        for i in range(1,14):
+            deck.append(self.create("hearts", i))
+            deck.append(self.create("clubs", i))
+            deck.append(self.create("diamonds", i))
+            deck.append(self.create("spades", i))
+
+        # shuffle the deck
+        random.shuffle(deck)
+        
+        return deck

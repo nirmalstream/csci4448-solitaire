@@ -1,13 +1,13 @@
 class Tableau:
     def __init__(self):
-        self.slots = {}
+        self.slots = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}
 
-    def move_card(self, slot_from, card, slot_to):
-        self.slots[slot_from].remove(card)
-        self.slots[slot_to].append(card)
-
-    def add_card(self, slot, card):
+    def add_card(self, card, slot):
         self.slots[slot].append(card)
+
+
+    def remove_card(self, card, slot):
+        self.slots[slot].remove(card)
     
 
     
