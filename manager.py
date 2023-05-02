@@ -19,43 +19,60 @@ deck = s.createDeck()
 b = Board(deck)
 suits = ['hearts', 'diamonds', 'clubs', 'spades']
 
-print (b.tableau)
+#print (b.tableau)
 def draw_card(card, x, y):
-    if card.face == False:
-        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_DIM)
-    else:
-        c=""
-        if card.value == 1:
-            c = "ace"
-        elif card.value == 11:
-            c = "jack"
-        elif card.value == 12:
-            c = "queen"
+    if card != None:
+        if card.face == False:
+            img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_DIM)
         else:
-            c = "king"
-        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_DIM)
+            c=""
+            if card.value == 1:
+                c = "ace"
+            elif card.value == 11:
+                c = "jack"
+            elif card.value == 12:
+                c = "queen"
+            else:
+                c = "king"
+            img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_DIM)
+    else:
+        img = pygame.transform.scale(pygame.image.load(my_path+'/cardPics/empty_holder.png'),CARD_DIM)
 
     screen.blit(img, (x, y))
 
-def draw_game(b):
-    background_tex = pygame.image.load(my_path+"/background.png")
-    screen.blit(background_tex, (0,0))
+def draw_game(b,deck):
+    #background_tex = pygame.image.load(my_path+"/background.png")
+    #screen.blit(background_tex, (0,0))
     for i in range(1,len(b.tableau.slots)+1):
         for j in range(len(b.tableau.slots[i])):
             if j == len(b.tableau.slots[i]) - 1:
-                draw_card(b.tableau.slots[i][j], i * 120 + 100, j * 30 + 50)
+                draw_card(b.tableau.slots[i][j], i * 120 + 100, j * 30 + 250)
             else:
                 img = pygame.transform.scale(pygame.image.load(my_path+'/cardPics/card_back.jpg'),CARD_DIM)
-                screen.blit(img, (i * 120 + 100, j * 30 + 50))
+                screen.blit(img, (i * 120 + 100, j * 30 + 250))
 
     if len(b.foundation.slot1) > 0:
-        draw_card(b.foundation.slot1[-1], suits.index(0) * 100 + 500, 50)
+        draw_card(b.foundation.slot1[-1], suits.index(0) * 120 + 500, 50)
+    else :
+        draw_card(None, 0 * 120 + 500, 50)
     if len(b.foundation.slot2) > 0:
-        draw_card(b.foundation.slot1[-1], suits.index(1) * 100 + 500, 50)
+        draw_card(b.foundation.slot1[-1], suits.index(1) * 120 + 500, 50)
+    else :
+        draw_card(None, 1 * 120 + 500, 50)
     if len(b.foundation.slot3) > 0:
-        draw_card(b.foundation.slot1[-1], suits.index(2) * 100 + 500, 50)
+        draw_card(b.foundation.slot1[-1], suits.index(2) * 120 + 500, 50)
+    else :
+        draw_card(None, 2 * 120 + 500, 50)
     if len(b.foundation.slot4) > 0:
-        draw_card(b.foundation.slot1[-1], suits.index(3) * 100 + 500, 50)
+        draw_card(b.foundation.slot1[-1], suits.index(3) * 120 + 500, 50)
+    else :
+        draw_card(None, 3 * 120 + 500, 50)
+
+    img = pygame.transform.scale(pygame.image.load(my_path+'/cardPics/card_back.jpg'),CARD_DIM)
+    screen.blit(img, (100, 50))
+    for i in range(3):
+        d_card = deck.pop(0)
+        draw_card(d_card, i*30 + 200,50)
 
 
 running = True
@@ -63,7 +80,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill((255, 255, 255))
-    draw_game(b)
+    screen.fill((255, 0, 0))
+    draw_game(b,deck)
     pygame.display.flip()
 pygame.quit()
