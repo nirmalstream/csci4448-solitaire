@@ -18,18 +18,18 @@ class Board:
 
 
         
-    def move_card(self, source, dest, card, slot = None):
+    def move_card(self, source, dest, card, slot_from = None, slot_to = None):
         if source == "stock":
             card = self.stock.get_card()
         elif source == "foundation":
-            self.foundation.remove_card(card, slot)
+            self.foundation.remove_card(card, slot_from)
         elif source == "tableau":
-            self.tableau.remove_card(card, slot)
+            self.tableau.remove_card(card, slot_from)
             
         if dest == "stock":
             # can't move to stock
             return "error"
         elif dest == "foundation":
-            self.foundation.add_card(card, slot)
+            self.foundation.add_card(card, slot_to)
         elif dest == "tableau":
-            self.tableau.add_card(card, slot)
+            self.tableau.add_card(card, slot_to)
