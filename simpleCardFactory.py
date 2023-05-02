@@ -13,7 +13,7 @@ class simpleCardFactory:
             return card.spades(val)
         else:
             return "error"
-        
+
     def createDeck(self):
         deck = []
         for i in range(1,14):
@@ -24,5 +24,5 @@ class simpleCardFactory:
 
         # shuffle the deck
         random.shuffle(deck)
-        
+
         return deck

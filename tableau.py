@@ -8,6 +8,3 @@ class Tableau:
 
     def remove_card(self, card, slot):
         self.slots[slot].remove(card)
-    
-
-    
