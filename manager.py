@@ -22,7 +22,7 @@ suits = ['hearts', 'diamonds', 'clubs', 'spades']
 print (b.tableau)
 def draw_card(card, x, y):
     if card.face == False:
-        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_SMALL_ITEM_SIZE)
+        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_DIM)
     else:
         c=""
         if card.value == 1:
@@ -33,18 +33,20 @@ def draw_card(card, x, y):
             c = "queen"
         else:
             c = "king"
-        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_SMALL_ITEM_SIZE)
+        img = pygame.transform.scale(pygame.image.load(my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_DIM)
 
     screen.blit(img, (x, y))
 
 def draw_game(b):
+    background_tex = pygame.image.load(my_path+"/background.png")
+    screen.blit(background_tex, (0,0))
     for i in range(1,len(b.tableau.slots)+1):
         for j in range(len(b.tableau.slots[i])):
             if j == len(b.tableau.slots[i]) - 1:
-                draw_card(b.tableau.slots[i][j], i * 100 + 50, j * 30 + 50)
+                draw_card(b.tableau.slots[i][j], i * 120 + 100, j * 30 + 50)
             else:
-                img = pygame.transform.scale(pygame.image.load(my_path+'/cardPics/card_back.jpg'),CARD_SMALL_ITEM_SIZE)
-                screen.blit(img, (i * 100 + 50, j * 30 + 50))
+                img = pygame.transform.scale(pygame.image.load(my_path+'/cardPics/card_back.jpg'),CARD_DIM)
+                screen.blit(img, (i * 120 + 100, j * 30 + 50))
 
     if len(b.foundation.slot1) > 0:
         draw_card(b.foundation.slot1[-1], suits.index(0) * 100 + 500, 50)
@@ -56,8 +58,6 @@ def draw_game(b):
         draw_card(b.foundation.slot1[-1], suits.index(3) * 100 + 500, 50)
 
 
-background_tex = pygame.image.load(my_path+"/background.png")
-screen.blit(background_tex, (0,0))
 running = True
 while running:
     for event in pygame.event.get():
@@ -65,6 +65,5 @@ while running:
             running = False
     screen.fill((255, 255, 255))
     draw_game(b)
-    pygame.display.update()
     pygame.display.flip()
 pygame.quit()

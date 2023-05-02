@@ -29,6 +29,8 @@ def draw_card(card, x, y):
     screen.blit(img, (x, y))
 
 def draw_game():
+    background_tex = pygame.image.load(my_path+"/background.png")
+    screen.blit(background_tex, (0,0))
     for i in range(len(tableau)):
         for j in range(len(tableau[i])):
             if j == len(tableau[i]) - 1:
@@ -40,8 +42,7 @@ def draw_game():
         if len(foundation[suit]) > 0:
             draw_card(foundation[suit][-1], suits.index(suit) * 100 + 500, 50)
 
-background_tex = pygame.image.load(my_path+"/background.png")
-screen.blit(background_tex, (0,0))
+
 running = True
 while running:
     for event in pygame.event.get():
