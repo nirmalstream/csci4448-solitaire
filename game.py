@@ -146,12 +146,19 @@ class Game:
             # check if end drag position is on the tableau
             if self.end_drag_pos[0] > 220 and self.end_drag_pos[0] < 1040 and self.end_drag_pos[1] > 250 and self.end_drag_pos[1] < 650:
                 # get the card from the stock
-                card = self.board.stock.get_flipped_cards()
-                self.board.stock.get_card()
+                card = self.board.stock.get_dragged_card()
                 # get the slot to move to
                 slot = int((self.end_drag_pos[0] - 100) / 120)
-                # add the card to the tableau
-                self.board.tableau.add_card(card, slot)
+                if (self.board.tableau.check_valid_move(slot,card)):
+                    print("True")
+                    card = self.board.stock.get_flipped_cards()
+                    self.board.stock.get_card()
+                    # get the slot to move to
+                    slot = int((self.end_drag_pos[0] - 100) / 120)
+                    # add the card to the tableau
+                    self.board.tableau.add_card(card, slot)
+                else:
+                    print(False)
             # check if end drag position is on the foundation
             elif self.end_drag_pos[0] > 500 and self.end_drag_pos[0] < 960 and self.end_drag_pos[1] > 50 and self.end_drag_pos[1] < 50 + CARD_DIM[1]:
                 # get the card from the stock
