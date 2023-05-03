@@ -60,7 +60,7 @@ class hearts(card):
         return self.face_up
 
     def set_face_up(self):
-        self.face_up = !self.face_up
+        self.face_up = not self.face_up
 
 class spades(card):
     def __init__(self,val):
@@ -82,7 +82,7 @@ class spades(card):
         return self.face_up
 
     def set_face_up(self):
-        self.face_up = !self.face_up
+        self.face_up =  not self.face_up
 
 class clubs(card):
     def __init__(self,val):
@@ -104,7 +104,7 @@ class clubs(card):
         return self.face_up
 
     def set_face_up(self):
-        self.face_up = !self.face_up
+        self.face_up =  not self.face_up
 
 class diamonds(card):
     def __init__(self,val):
@@ -126,4 +126,4 @@ class diamonds(card):
         return self.face_up
 
     def set_face_up(self):
-        self.face_up = !self.face_up
+        self.face_up = not self.face_up
