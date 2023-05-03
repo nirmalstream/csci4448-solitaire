@@ -50,7 +50,7 @@ class Tableau:
         value = card.get_value()
         color = card.get_color()
 
-        tableu_card = self.get_bottom_card()
+        tableu_card = self.get_bottom_card(slot)
         tableau_value = tableu_card.get_value()
         tableau_color = tableu_card.get_color()
 

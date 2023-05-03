@@ -1,6 +1,7 @@
 import foundation
 import tableau
 import stock
+import scoreTable
 class Board:
     def __init__(self, deck):
         self.foundation = foundation.Foundation()
@@ -23,6 +24,11 @@ class Board:
             card.face_up = True
         self.stock = stock.Stock(deck)
 
+        # create the score table
+        self.score_table = scoreTable.ScoreTable()
+        # make the scoretable an observer of the foundation
+        self.foundation.register_observer(self.score_table)
+
 
         
     def move_card(self, source, dest, card, slot_from = None, slot_to = None):
@@ -40,3 +46,6 @@ class Board:
             self.foundation.add_card(card, slot_to)
         elif dest == "tableau":
             self.tableau.add_card(card, slot_to)
+
+    def save_score(self, name):
+        self.score_table.save_score_to_csv(name)

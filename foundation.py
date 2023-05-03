@@ -5,7 +5,6 @@ class Foundation:
 
     def add_card(self, card, slot):
         self.slots[slot].append(card)
-
         self.notify_observers()
 
     def remove_card(self, card, slot):
@@ -24,6 +23,8 @@ class Foundation:
     def remove_ending_card(self, slot):
         card = self.slots[slot][-1]
         self.slots[slot].remove(card)
+        # notify observers
+        self.notify_observers()
         return card
 
     def get_displayed_card(self,slot):

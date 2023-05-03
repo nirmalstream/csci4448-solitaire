@@ -12,7 +12,6 @@ class Game:
     def __init__(self):
         deck = simpleCardFactory().createDeck()
         self.board = board.Board(deck)
-        self.score_table = scoreTable.ScoreTable()
 
         self.my_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -69,6 +68,13 @@ class Game:
 
     def draw_game(self):
         self.screen.fill((255, 0, 0))
+
+        # make a quit game button to save score
+        pygame.draw.rect(self.screen, (0, 0, 0), (WIDTH - 100, 0, 100, 50))
+        font = pygame.font.SysFont('Arial', 20)
+        text = font.render("Quit", True, (255, 255, 255))
+        self.screen.blit(text, (WIDTH - 100, 0))
+
 
         # draw tableau
         for i in range(1,len(self.board.tableau.slots)+1):
@@ -255,7 +261,6 @@ class Game:
 
         if(pos[0] > 100 and pos[0] < 100 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
             self.board.stock.get_card()
-
 
 
     def run(self):
