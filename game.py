@@ -140,12 +140,12 @@ class Game:
                 card = self.board.stock.get_dragged_card()
                 # get the slot to move to
                 slot = int((self.end_drag_pos[0] - 100) / 120)
+                # check valid move
                 if (self.board.tableau.check_valid_move(slot,card)):
                     print("True")
+                    # get the card from the stock
                     card = self.board.stock.get_flipped_cards()
                     self.board.stock.get_card()
-                    # get the slot to move to
-                    slot = int((self.end_drag_pos[0] - 100) / 120)
                     # add the card to the tableau
                     self.board.tableau.add_card(card, slot)
                 else:
@@ -153,12 +153,21 @@ class Game:
             # check if end drag position is on the foundation
             elif self.end_drag_pos[0] > 500 and self.end_drag_pos[0] < 960 and self.end_drag_pos[1] > 50 and self.end_drag_pos[1] < 50 + CARD_DIM[1]:
                 # get the card from the stock
-                card = self.board.stock.get_flipped_cards()
-                self.board.stock.get_card()
+                card = self.board.stock.get_dragged_card()
                 # get the slot to move to
-                slot = int((self.end_drag_pos[0] - 500) / 120)
-                # add the card to the foundation
-                self.board.foundation.add_card(card, slot)
+                slot = int((self.end_drag_pos[0] - 100) / 120)
+                # check valid move
+                if (self.board.foundation.check_valid_move(slot,card)):
+                    print("True")
+                    # get the card from the stock
+                    card = self.board.stock.get_flipped_cards()
+                    self.board.stock.get_card()
+                    # get the slot to move to
+                    slot = int((self.end_drag_pos[0] - 500) / 120)
+                    # add the card to the foundation
+                    self.board.foundation.add_card(card, slot)
+                else:
+                    print(False)
 
         # check if start drag position is on the tableau
         elif self.start_drag_pos[0] > 220 and self.start_drag_pos[0] < 1040 and self.start_drag_pos[1] > 250 and self.start_drag_pos[1] < 650:
@@ -166,10 +175,16 @@ class Game:
             if self.end_drag_pos[0] > 500 and self.end_drag_pos[0] < 960 and self.end_drag_pos[1] > 50 and self.end_drag_pos[1] < 50 + CARD_DIM[1]:
                 # get the card from the tableau
                 slot_from = int((self.start_drag_pos[0] - 100) / 120)
+                card = self.board.tableau.get_bottom_card(slot_from)
                 slot_to = int((self.end_drag_pos[0] - 500) / 120)
-                card = self.board.tableau.remove_ending_card(slot_from)
-                # add the card to the foundation
-                self.board.foundation.add_card(card, slot_to)
+                # check valid move
+                if (self.board.foundation.check_valid_move(slot_to,card)):
+                    print(True)
+                    card = self.board.tableau.remove_ending_card(slot_from)
+                    # add the card to the foundation
+                    self.board.foundation.add_card(card, slot_to)
+                else:
+                    print(False)
 
             # check what card the the end drag is on in the tableau
             elif self.end_drag_pos[0] > 220 and self.end_drag_pos[0] < 1040 and self.end_drag_pos[1] > 250 and self.end_drag_pos[1] < 650:
@@ -179,13 +194,19 @@ class Game:
                 # get the card that is clicked on the tableau
                 # get the num of cards in slot_from
                 num_cards = len(self.board.tableau.slots[slot_from])
-
                 # check to see if the last card is clicked
                 if self.start_drag_pos[1] > 250 + (num_cards - 1) * 30:
-                    # move last card
-                    card = self.board.tableau.remove_ending_card(slot_from)
-                    self.board.tableau.add_card(card, slot_to)
-                
+                    #get card
+                    card = self.board.tableau.get_bottom_card(slot_from)
+                    # check valid move
+                    if (self.board.tableau.check_valid_move(slot_to,card)):
+                        print(True)
+                        # move last card
+                        card = self.board.tableau.remove_ending_card(slot_from)
+                        self.board.tableau.add_card(card, slot_to)
+                    else:
+                        print(False)
+
                 else:
                     # get the card that is clicked
                     index = int((self.start_drag_pos[1] - 250) / 30)
@@ -196,11 +217,15 @@ class Game:
                     # check that the card is face up
                     if card.face_up == False:
                         return
-                    
+                    # check if valid move
+                    if (self.board.tableau.check_valid_move(slot_to,card)):
+                        print(True)
+                        #move card
+                        self.board.tableau.move_card(card, slot_from, slot_to)
+                    else:
+                        print(False)
 
-                    self.board.tableau.move_card(card, slot_from, slot_to)
 
-                
                 # get the card that is clicked
                 # card = self.board.tableau.slots[slot_from][num_cards - int((self.start_drag_pos[1] - 250) / 30) - 1]
                 # print(card.value, card.suite)
@@ -214,9 +239,15 @@ class Game:
                 # get the card from the foundation
                 slot_from = int((self.start_drag_pos[0] - 500) / 120)
                 slot_to = int((self.end_drag_pos[0] - 100) / 120)
-                card = self.board.foundation.remove_ending_card(slot_from)
-                # add the card to the tableau
-                self.board.tableau.add_card(card, slot_to)
+                card = self.board.foundation.get_displayed_card(slot_from)
+                # check valid move
+                if (self.board.tableau.check_valid_move(slot_to,card)):
+                    print(True)
+                    card = self.board.foundation.remove_ending_card(slot_from)
+                    # add the card to the tableau
+                    self.board.tableau.add_card(card, slot_to)
+                else:
+                    print(False)
 
     def handle_mouse_click(self, pos):
         print(pos)
@@ -225,7 +256,7 @@ class Game:
         if(pos[0] > 100 and pos[0] < 100 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
             self.board.stock.get_card()
 
-        
+
 
     def run(self):
         running = True
