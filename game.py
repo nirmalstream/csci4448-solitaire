@@ -31,8 +31,6 @@ class Game:
         self.end_drag_pos = None
 
 
-
-
     def draw_card(self, card, x, y):
         if card != None:
             # normal card
@@ -76,13 +74,6 @@ class Game:
         for i in range(1,len(self.board.tableau.slots)+1):
             for j in range(len(self.board.tableau.slots[i])):
                     self.draw_card(self.board.tableau.slots[i][j], i * 120 + 100, j * 30 + 250)
-
-                # if j == len(self.board.tableau.slots[i]) - 1:
-                #     self.draw_card(self.board.tableau.slots[i][j], i * 120 + 100, j * 30 + 250)
-                # else:
-                #     img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
-                #     self.screen.blit(img, (i * 120 + 100, j * 30 + 250))
-
         # draw the stock
         img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
         self.screen.blit(img, (100, 50))
@@ -180,15 +171,41 @@ class Game:
                 # add the card to the foundation
                 self.board.foundation.add_card(card, slot_to)
 
-
-            # check if end drag is the tableau
+            # check what card the the end drag is on in the tableau
             elif self.end_drag_pos[0] > 220 and self.end_drag_pos[0] < 1040 and self.end_drag_pos[1] > 250 and self.end_drag_pos[1] < 650:
                 # get the card from the tableau
                 slot_from = int((self.start_drag_pos[0] - 100) / 120)
                 slot_to = int((self.end_drag_pos[0] - 100) / 120)
-                card = self.board.tableau.remove_ending_card(slot_from)
-                # add the card to the tableau
-                self.board.tableau.add_card(card, slot_to)
+                # get the card that is clicked on the tableau
+                # get the num of cards in slot_from
+                num_cards = len(self.board.tableau.slots[slot_from])
+
+                # check to see if the last card is clicked
+                if self.start_drag_pos[1] > 250 + (num_cards - 1) * 30:
+                    # move last card
+                    card = self.board.tableau.remove_ending_card(slot_from)
+                    self.board.tableau.add_card(card, slot_to)
+                
+                else:
+                    # get the card that is clicked
+                    index = int((self.start_drag_pos[1] - 250) / 30)
+
+                    # get the card
+                    card = self.board.tableau.slots[slot_from][index]
+
+                    # check that the card is face up
+                    if card.face_up == False:
+                        return
+                    
+
+                    self.board.tableau.move_card(card, slot_from, slot_to)
+
+                
+                # get the card that is clicked
+                # card = self.board.tableau.slots[slot_from][num_cards - int((self.start_drag_pos[1] - 250) / 30) - 1]
+                # print(card.value, card.suite)
+
+                # self.board.tableau.move_card(card, slot_from, slot_to)
 
         # check if start drag position is on the foundation
         elif self.start_drag_pos[0] > 500 and self.start_drag_pos[0] < 960 and self.start_drag_pos[1] > 50 and self.start_drag_pos[1] < 50 + CARD_DIM[1]:
@@ -203,31 +220,12 @@ class Game:
 
     def handle_mouse_click(self, pos):
         print(pos)
-        # for i in range(1,len(self.board.tableau.slots)+1):
-        #     for j in range(len(self.board.tableau.slots[i])):
-        #         if j == len(self.board.tableau.slots[i]) - 1:
-        #             if pos[0] > i * 120 + 100 and pos[0] < i * 120 + 100 + CARD_DIM[0] and pos[1] > j * 30 + 250 and pos[1] < j * 30 + 250 + CARD_DIM[1]:
-        #                 self.board.tableau.slots[i][j].face = True
-
-
         # handle mouse click for deck
 
         if(pos[0] > 100 and pos[0] < 100 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
-            print("clicked on deck")
             self.board.stock.get_card()
 
-
-
-        # handle mouse click for 4 foundation slots
-
-        # if(pos[0] > 500 and pos[0] < 860 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
-        #     print("clicked on foundation")
-
-
-
-
-
-
+        
 
     def run(self):
         running = True
