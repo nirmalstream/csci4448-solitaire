@@ -52,11 +52,15 @@ class Tableau:
         value = card.get_value()
         color = card.get_color()
 
-        tableu_card = self.get_bottom_card(slot)
-        tableau_value = tableu_card.get_value()
-        tableau_color = tableu_card.get_color()
+        if len(self.slots[slot])>0:
+            tableu_card = self.get_bottom_card(slot)
+            tableau_value = tableu_card.get_value()
+            tableau_color = tableu_card.get_color()
 
-        if (tableau_value-value == 1):
-            if (tableau_color == "red" and color == "black") or (tableau_color == "black" and color == "red"):
+            if (tableau_value-value == 1):
+                if (tableau_color == "red" and color == "black") or (tableau_color == "black" and color == "red"):
+                    return True
+        else:
+            if value == 13:
                 return True
         return False
