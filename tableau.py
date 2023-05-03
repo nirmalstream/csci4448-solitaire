@@ -12,4 +12,8 @@ class Tableau:
     def remove_ending_card(self, slot):
         card = self.slots[slot][-1]
         self.slots[slot].remove(card)
+
+        # make the last card face up
+        if len(self.slots[slot]) > 0:
+            self.slots[slot][-1].face_up = True
         return card

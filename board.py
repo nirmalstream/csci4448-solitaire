@@ -13,7 +13,14 @@ class Board:
                 card = deck.pop(0)
                 self.tableau.add_card(card, i)
 
+        # last card in each tableau is face up
+        for i in range(1, 8):
+            self.tableau.slots[i][-1].face_up = True
+
         # now create the stock with the remaining cards
+        # all cards are face up in the stock
+        for card in deck:
+            card.face_up = True
         self.stock = stock.Stock(deck)
 
 
