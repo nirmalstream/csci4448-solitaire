@@ -2,6 +2,7 @@ class card:
     def __init__(self, val, suite):
         self.value = val
         self.suite = suite
+        self.face_up = False
         if (val == 1 or val>= 11):
             self.face = True
         else:

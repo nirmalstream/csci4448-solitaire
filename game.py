@@ -34,23 +34,35 @@ class Game:
 
 
     def draw_card(self, card, x, y):
-        if card != None:
+        if card != None:                
+            # normal card
             if card.face == False:
-                img = pygame.transform.scale(pygame.image.load(self.my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_DIM)
-            else:
-                c=""
-                if card.value == 1:
-                    c = "ace"
-                elif card.value == 11:
-                    c = "jack"
-                elif card.value == 12:
-                    c = "queen"
-                elif card.value == 13:
-                    c = "king"
+                if card.face_up:
+                    img = pygame.transform.scale(pygame.image.load(self.my_path+f'/cardPics/{str(card.value)}_of_{card.suite}.png'),CARD_DIM)
                 else:
-                    # error
-                    print("error")
-                img = pygame.transform.scale(pygame.image.load(self.my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_DIM)
+                    img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
+            
+            # jack, queen, king, ace
+            else:
+                if card.face_up:
+                    c=""
+                    if card.value == 1:
+                        c = "ace"
+                    elif card.value == 11:
+                        c = "jack"
+                    elif card.value == 12:
+                        c = "queen"
+                    elif card.value == 13:
+                        c = "king"
+                    else:
+                        # error
+                        print("error")
+                
+                    img = pygame.transform.scale(pygame.image.load(self.my_path+f'/cardPics/{c}_of_{card.suite}.png'),CARD_DIM)
+                else:
+                    # card is face down
+                    img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
+
         else:
             img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/empty_holder.png'),CARD_DIM)
 
@@ -60,13 +72,16 @@ class Game:
     def draw_game(self):
         self.screen.fill((255, 0, 0))
 
+        # draw tableau
         for i in range(1,len(self.board.tableau.slots)+1):
             for j in range(len(self.board.tableau.slots[i])):
-                if j == len(self.board.tableau.slots[i]) - 1:
                     self.draw_card(self.board.tableau.slots[i][j], i * 120 + 100, j * 30 + 250)
-                else:
-                    img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
-                    self.screen.blit(img, (i * 120 + 100, j * 30 + 250))
+
+                # if j == len(self.board.tableau.slots[i]) - 1:
+                #     self.draw_card(self.board.tableau.slots[i][j], i * 120 + 100, j * 30 + 250)
+                # else:
+                #     img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
+                #     self.screen.blit(img, (i * 120 + 100, j * 30 + 250))
 
         # draw the stock
         img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
@@ -83,8 +98,6 @@ class Game:
                 self.draw_card(None, i * 120 + 500, 50)
             else:
                 self.draw_card(self.board.foundation.slots[i][-1], i * 120 + 500, 50)
-
-
 
         pygame.display.flip()
 
@@ -123,10 +136,6 @@ class Game:
                     
 
 
-            
-
-        
-
     def handle_mouse_drag(self):
         # check if start drag position is on the flipped cards of the stock
         if self.start_drag_pos[0] > 110 + CARD_DIM[0] and self.start_drag_pos[0] < 110 + CARD_DIM[0] + CARD_DIM[0] and self.start_drag_pos[1] > 50 and self.start_drag_pos[1] < 50 + CARD_DIM[1]:
@@ -159,6 +168,16 @@ class Game:
                 card = self.board.tableau.remove_ending_card(slot_from)
                 # add the card to the foundation
                 self.board.foundation.add_card(card, slot_to)
+
+
+            # check if end drag is the tableau
+            elif self.end_drag_pos[0] > 220 and self.end_drag_pos[0] < 1040 and self.end_drag_pos[1] > 250 and self.end_drag_pos[1] < 650:
+                # get the card from the tableau
+                slot_from = int((self.start_drag_pos[0] - 100) / 120)
+                slot_to = int((self.end_drag_pos[0] - 100) / 120)
+                card = self.board.tableau.remove_ending_card(slot_from)
+                # add the card to the tableau
+                self.board.tableau.add_card(card, slot_to)
 
         # check if start drag position is on the foundation
         elif self.start_drag_pos[0] > 500 and self.start_drag_pos[0] < 960 and self.start_drag_pos[1] > 50 and self.start_drag_pos[1] < 50 + CARD_DIM[1]:
