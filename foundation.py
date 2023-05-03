@@ -35,7 +35,7 @@ class Foundation:
         suite = card.get_suite()
         value = card.get_value()
 
-        if len(self.slots[slot]>0):
+        if len(self.slots[slot]) > 0:
             foundation_card = self.get_displayed_card(slot)
             foundation_suite = foundation_card.get_suite()
             foundation_value = foundation_card.get_value()

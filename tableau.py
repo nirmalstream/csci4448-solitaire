@@ -39,8 +39,10 @@ class Tableau:
             for card in cards:
                 self.add_card(card, slot_to)
 
-            # make the last card face up
-            self.slots[slot_from][-1].face_up = True
+            # check slot is empty
+            if len(self.slots[slot_from]) > 0:
+                # make the last card face up
+                self.slots[slot_from][-1].face_up = True
 
     def get_bottom_card(self,slot):
         card = self.slots[slot][-1]
