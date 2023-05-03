@@ -29,3 +29,10 @@ class EndGame(Command):
 
     def execute(self):
         self.board.end_game()
+
+class ResetGame(Command):
+    def __init__(self, board):
+        self.board = board
+
+    def execute(self):
+        self.board.reset_game()
