@@ -60,11 +60,6 @@ class Game:
     def draw_game(self):
         self.screen.fill((255, 0, 0))
 
-
-        # size 52
-
-        #background_tex = pygame.image.load(my_path+"/background.png")
-        #screen.blit(background_tex, (0,0))
         for i in range(1,len(self.board.tableau.slots)+1):
             for j in range(len(self.board.tableau.slots[i])):
                 if j == len(self.board.tableau.slots[i]) - 1:
@@ -72,24 +67,6 @@ class Game:
                 else:
                     img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
                     self.screen.blit(img, (i * 120 + 100, j * 30 + 250))
-
-        # if len(self.board.foundation.slot1) > 0:
-        #     self.draw_card(self.board.foundation.slot1[-1], 0 * 120 + 500, 50)
-        # else :
-        #     self.draw_card(None, 0 * 120 + 500, 50)
-        # if len(self.board.foundation.slot2) > 0:
-        #     self.draw_card(self.board.foundation.slot1[-1], 1 * 120 + 500, 50)
-        # else :
-        #     self.draw_card(None, 1 * 120 + 500, 50)
-        # if len(self.board.foundation.slot3) > 0:
-        #     self.draw_card(self.board.foundation.slot1[-1], 2 * 120 + 500, 50)
-        # else :
-        #     self.draw_card(None, 2 * 120 + 500, 50)
-        # if len(self.board.foundation.slot4) > 0:
-        #     self.draw_card(self.board.foundation.slot1[-1], 3 * 120 + 500, 50)
-        # else :
-        #     self.draw_card(None, 3 * 120 + 500, 50)
-
 
         # draw the stock
         img = pygame.transform.scale(pygame.image.load(self.my_path+'/cardPics/card_back.jpg'),CARD_DIM)
@@ -213,6 +190,12 @@ class Game:
 
             # check for mouse click
             self.check_mouse()
+        
+            # check for quit
+            if self.event.type == pygame.QUIT:
+                running = False
+                self.quit()
+                
 
 
 
