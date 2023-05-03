@@ -20,3 +20,8 @@ class Foundation:
     def notify_observers(self):
         for observer in self.observers:
             observer.updateScore(1)
+
+    def remove_ending_card(self, slot):
+        card = self.slots[slot][-1]
+        self.slots[slot].remove(card)
+        return card

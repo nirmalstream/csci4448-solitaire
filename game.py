@@ -149,9 +149,27 @@ class Game:
                 # add the card to the foundation
                 self.board.foundation.add_card(card, slot)
 
+        # check if start drag position is on the tableau   
+        elif self.start_drag_pos[0] > 220 and self.start_drag_pos[0] < 1040 and self.start_drag_pos[1] > 250 and self.start_drag_pos[1] < 650:
+            # check if end drag is the foundation
+            if self.end_drag_pos[0] > 500 and self.end_drag_pos[0] < 960 and self.end_drag_pos[1] > 50 and self.end_drag_pos[1] < 50 + CARD_DIM[1]:
+                # get the card from the tableau
+                slot_from = int((self.start_drag_pos[0] - 100) / 120)
+                slot_to = int((self.end_drag_pos[0] - 500) / 120)
+                card = self.board.tableau.remove_ending_card(slot_from)
+                # add the card to the foundation
+                self.board.foundation.add_card(card, slot_to)
 
-            
-
+        # check if start drag position is on the foundation
+        elif self.start_drag_pos[0] > 500 and self.start_drag_pos[0] < 960 and self.start_drag_pos[1] > 50 and self.start_drag_pos[1] < 50 + CARD_DIM[1]:
+            # check if end drag is the tableau
+            if self.end_drag_pos[0] > 220 and self.end_drag_pos[0] < 1040 and self.end_drag_pos[1] > 250 and self.end_drag_pos[1] < 650:
+                # get the card from the foundation
+                slot_from = int((self.start_drag_pos[0] - 500) / 120)
+                slot_to = int((self.end_drag_pos[0] - 100) / 120)
+                card = self.board.foundation.remove_ending_card(slot_from)
+                # add the card to the tableau
+                self.board.tableau.add_card(card, slot_to)
 
     def handle_mouse_click(self, pos):
         print(pos)
@@ -195,7 +213,7 @@ class Game:
             if self.event.type == pygame.QUIT:
                 running = False
                 self.quit()
-                
+
 
 
 

@@ -8,3 +8,8 @@ class Tableau:
 
     def remove_card(self, card, slot):
         self.slots[slot].remove(card)
+
+    def remove_ending_card(self, slot):
+        card = self.slots[slot][-1]
+        self.slots[slot].remove(card)
+        return card
