@@ -1,31 +1,18 @@
 class Foundation:
     def __init__(self):
-        self.slot1 = []
-        self.slot2 = []
-        self.slot3 = []
-        self.slot4 = []
+        self.slots = [[], [], [], []]
         self.observers = []
     
     def add_card(self, card, slot):
-        if slot == 1:
-            self.slot1.append(card)
-        elif slot == 2:
-            self.slot2.append(card)
-        elif slot == 3:
-            self.slot3.append(card)
-        elif slot == 4:
-            self.slot4.append(card)
+        self.slots[slot].append(card)
+
         self.notify_observers()
 
     def remove_card(self, card, slot):
-        if slot == 1:
-            self.slot1.remove(card)
-        elif slot == 2:
-            self.slot2.remove(card)
-        elif slot == 3:
-            self.slot3.remove(card)
-        elif slot == 4:
-            self.slot4.remove(card)
+        self.slots[slot].remove(card)
+
+        self.notify_observers() 
+
 
     def register_observer(self, observer):
         self.observers.append(observer)
