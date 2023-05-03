@@ -29,7 +29,7 @@ class Game:
         self.mouse_up = False
         self.start_drag_pos = None
         self.end_drag_pos = None
-    
+
 
 
 
@@ -102,7 +102,7 @@ class Game:
             if self.event.type == pygame.MOUSEMOTION:
                 self.drag = True
                 self.drag_size += 1
-            
+
             # check mouse release
             if self.event.type == pygame.MOUSEBUTTONUP:
                 self.mouse_up = True
@@ -113,19 +113,19 @@ class Game:
                     self.handle_mouse_click(pygame.mouse.get_pos())
                 else:
                     self.handle_mouse_drag()
-                
+
                 self.mouse_down = False
                 self.mouse_up = False
                 self.drag = False
                 self.drag_size = 0
                 self.start_drag_pos = None
                 self.end_drag_pos = None
-                    
 
 
-            
 
-        
+
+
+
 
     def handle_mouse_drag(self):
         # check if start drag position is on the flipped cards of the stock
@@ -149,7 +149,7 @@ class Game:
                 # add the card to the foundation
                 self.board.foundation.add_card(card, slot)
 
-        # check if start drag position is on the tableau   
+        # check if start drag position is on the tableau
         elif self.start_drag_pos[0] > 220 and self.start_drag_pos[0] < 1040 and self.start_drag_pos[1] > 250 and self.start_drag_pos[1] < 650:
             # check if end drag is the foundation
             if self.end_drag_pos[0] > 500 and self.end_drag_pos[0] < 960 and self.end_drag_pos[1] > 50 and self.end_drag_pos[1] < 50 + CARD_DIM[1]:
@@ -189,12 +189,12 @@ class Game:
 
 
         # handle mouse click for 4 foundation slots
-        
+
         # if(pos[0] > 500 and pos[0] < 860 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
         #     print("clicked on foundation")
 
-        
-        
+
+
 
 
 
@@ -208,7 +208,7 @@ class Game:
 
             # check for mouse click
             self.check_mouse()
-        
+
             # check for quit
             if self.event.type == pygame.QUIT:
                 running = False
@@ -223,6 +223,3 @@ class Game:
 
 game = Game()
 game.run()
-
-
-
