@@ -181,7 +181,7 @@ class Game:
                 
                 else:
                     # get the card that is clicked
-                    index = int((self.startå_drag_pos[1] - 250) / 30)
+                    index = int((self.start_drag_pos[1] - 250) / 30)
 
                     # get the card
                     card = self.board.tableau.slots[slot_from][index]
