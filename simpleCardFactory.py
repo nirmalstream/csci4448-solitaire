@@ -1,6 +1,7 @@
 import card
 import random
 
+# FACTORY PATTERN
 class simpleCardFactory:
     def create(self, suite, val):
         if suite == "hearts":

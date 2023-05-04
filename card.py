@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+
+# ABSTACT FACTORY PATTERN
 class card(ABC):
 
     @abstractmethod

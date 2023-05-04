@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+# COMMAND PATTERN
 class Command(ABC):
 
     @abstractmethod
