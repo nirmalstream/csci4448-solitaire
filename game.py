@@ -274,13 +274,6 @@ class Game:
                     else:
                         print(False)
 
-
-                # get the card that is clicked
-                # card = self.board.tableau.slots[slot_from][num_cards - int((self.start_drag_pos[1] - 250) / 30) - 1]
-                # print(card.value, card.suite)
-
-                # self.board.tableau.move_card(card, slot_from, slot_to)
-
         # check if start drag position is on the foundation
         elif self.start_drag_pos[0] > 500 and self.start_drag_pos[0] < 960 and self.start_drag_pos[1] > 50 and self.start_drag_pos[1] < 50 + CARD_DIM[1]:
             # check if end drag is the tableau
@@ -343,7 +336,3 @@ class Game:
                 
     def quit(self):
         pygame.quit()
-
-
-game = Game()
-game.run()
