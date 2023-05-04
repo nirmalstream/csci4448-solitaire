@@ -40,6 +40,29 @@ class Game:
 
     def get_game_done(self):
         return self.game_done
+        self.draw_score_table = False
+    
+    def draw_score(self):
+        # draw the score table
+
+        # get scores from csv
+        score_list = self.board.score_table.getScores()
+
+        # sort scores
+        sorted_score_list = sorted(score_list.items(), key=lambda x: x[1], reverse=True)
+
+        # draw the score table
+        pygame.draw.rect(self.screen, (0, 0, 0), (50, 500, 200, 200))
+
+        # draw the scores
+        font = pygame.font.SysFont('Arial', 20)
+        for i in range(len(sorted_score_list)):
+            name, score = sorted_score_list[i]
+            text = font.render(name + ": " + str(score), True, (255, 255, 255))
+            self.screen.blit(text, (50, 500 + 20 * i))
+
+        
+
 
     def draw_card(self, card, x, y):
         if card != None:
@@ -80,11 +103,20 @@ class Game:
     def draw_game(self):
         self.screen.fill((255, 0, 0))
 
-        # make a quit game button to save score
+        if self.draw_score_table:
+            self.draw_score()
+
+        # quit game button to save score
         pygame.draw.rect(self.screen, (0, 0, 0), (WIDTH - 100, 0, 100, 50))
         font = pygame.font.SysFont('Arial', 20)
         text = font.render("Quit", True, (255, 255, 255))
         self.screen.blit(text, (WIDTH - 100, 0))
+
+        # button to show the score table   
+        pygame.draw.rect(self.screen, (0, 0, 0), (WIDTH - 100, 50, 100, 50))
+        font = pygame.font.SysFont('Arial', 20)
+        text = font.render("Score", True, (255, 255, 255))
+        self.screen.blit(text, (WIDTH - 100, 50))
 
 
         # draw tableau
@@ -271,6 +303,26 @@ class Game:
         if(pos[0] > 100 and pos[0] < 100 + CARD_DIM[0] and pos[1] > 50 and pos[1] < 50 + CARD_DIM[1]):
             self.board.stock.get_card()
 
+        # handle mouse click for quit button
+        if(pos[0] > 1100 and pos[0] < 1200 and pos[1] > 0 and pos[1] < 50):
+
+            self.board.save_score(self.get_user_name())
+            self.quit()
+
+        # handle mouse click for score
+        if(pos[0] > 1100 and pos[0] < 1200 and pos[1] > 50 and pos[1] < 100):
+            # flip draw_score_table
+            if self.draw_score_table:
+                self.draw_score_table = False
+            else:
+                self.draw_score_table = True
+
+
+    def get_user_name(self):
+        # get user name
+        user_name = input("Enter your name: ")
+        return user_name
+    
 
     def run(self):
         running = True

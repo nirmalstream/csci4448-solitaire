@@ -14,3 +14,13 @@ class ScoreTable:
     def updateScore(self, score):
         self.score += score
         print(self.score)
+
+    def getScores(self):
+        # get scores from csv
+        self.score_list = {}
+        with open('score.csv', 'r') as f:
+            for line in f:
+                name, score = line.strip().split(',')
+                self.score_list[name] = score
+        return self.score_list
+    
