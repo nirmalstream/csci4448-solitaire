@@ -30,6 +30,8 @@ class Game:
         self.end_drag_pos = None
         self.game_done = False
 
+        self.draw_score_table = False
+
     def check_game_over(self):
         count = 0
         for i in self.board.foundation.slots:

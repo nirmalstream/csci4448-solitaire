@@ -45,8 +45,10 @@ class Tableau:
                 self.slots[slot_from][-1].face_up = True
 
     def get_bottom_card(self,slot):
-        card = self.slots[slot][-1]
-        return card
+        if len(self.slots[slot])>0:
+
+            card = self.slots[slot][-1]
+            return card
 
     def check_valid_move(self,slot,card):
         value = card.get_value()
