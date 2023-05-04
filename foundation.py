@@ -34,12 +34,13 @@ class Foundation:
     def check_valid_move(self,slot,card):
         suite = card.get_suite()
         value = card.get_value()
-
+        print(slot)
         if len(self.slots[slot]) > 0:
             foundation_card = self.get_displayed_card(slot)
             foundation_suite = foundation_card.get_suite()
             foundation_value = foundation_card.get_value()
-
+            print(value-foundation_value)
+            print(suite,foundation_suite)
             if (value - foundation_value == 1) and (suite == foundation_suite):
                 return True
         else:

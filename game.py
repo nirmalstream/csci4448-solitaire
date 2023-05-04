@@ -28,7 +28,18 @@ class Game:
         self.mouse_up = False
         self.start_drag_pos = None
         self.end_drag_pos = None
+        self.game_done = False
 
+    def check_game_over(self):
+        count = 0
+        for i in self.board.foundation.slots:
+            if len(i)==14:
+                count+=1
+        if count == 4:
+            self.game_done = True
+
+    def get_game_done(self):
+        return self.game_done
 
     def draw_card(self, card, x, y):
         if card != None:
@@ -161,15 +172,13 @@ class Game:
                 # get the card from the stock
                 card = self.board.stock.get_dragged_card()
                 # get the slot to move to
-                slot = int((self.end_drag_pos[0] - 100) / 120)
+                slot = int((self.end_drag_pos[0] - 500) / 120)
                 # check valid move
                 if (self.board.foundation.check_valid_move(slot,card)):
                     print("True")
                     # get the card from the stock
                     card = self.board.stock.get_flipped_cards()
                     self.board.stock.get_card()
-                    # get the slot to move to
-                    slot = int((self.end_drag_pos[0] - 500) / 120)
                     # add the card to the foundation
                     self.board.foundation.add_card(card, slot)
                 else:

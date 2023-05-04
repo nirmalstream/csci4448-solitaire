@@ -56,7 +56,9 @@ class Tableau:
             tableu_card = self.get_bottom_card(slot)
             tableau_value = tableu_card.get_value()
             tableau_color = tableu_card.get_color()
-
+            print(tableau_value,value)
+            print(tableau_color,color)
+            print(tableu_card.get_suite(),card.get_suite())
             if (tableau_value-value == 1):
                 if (tableau_color == "red" and color == "black") or (tableau_color == "black" and color == "red"):
                     return True
