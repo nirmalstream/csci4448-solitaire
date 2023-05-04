@@ -7,7 +7,17 @@ import random
 from board import *
 from simpleCardFactory import *
 
+# SINGLETON CLASS
 class Game:
+    __instance = None
+
+    @staticmethod
+    def getInstance():
+        """ Static access method. """
+        if Game.__instance == None:
+            Game()
+        return Game.__instance
+    
 
     def __init__(self):
         deck = simpleCardFactory().createDeck()
