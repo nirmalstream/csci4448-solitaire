@@ -338,10 +338,7 @@ class Game:
             if self.event.type == pygame.QUIT:
                 running = False
                 self.quit()
-
-
-
-
+                
     def quit(self):
         pygame.quit()
 
